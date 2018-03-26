@@ -17,7 +17,6 @@ label<-labels$label-1
 
 ```{r}
 xgboost_para <- function(dat_train,label_train,K){
-  
   dtrain = xgb.DMatrix(data=data.matrix(dat_train),label=label_train)
   max_depth<-c(3,5,7)
   eta<-c(0.1,0.3,0.5)
@@ -29,7 +28,7 @@ xgboost_para <- function(dat_train,label_train,K){
     for (j in 1:3){
       my.params <- list(max_depth = max_depth[i], eta = eta[j])
       set.seed(11)
-      cv.output <- xgboost.cv(data=dtrain, params=my.params, 
+      cv.output <- xgb.cv(data=dtrain, params=my.params, 
                           nrounds = 100, gamma = 0, subsample = 0.5,
                           objective = "multi:softprob", num_class = 3,
                           nfold = K, nthread = 2, early_stopping_rounds = 5, 
