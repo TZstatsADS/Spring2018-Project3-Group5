@@ -172,7 +172,6 @@ if(run.test){
   #saveRDS(best_test_model,file='~/Documents/GitHub/Spring2018-Project3-Group5/output/best_test_model.RData')
   write.csv(file='~/Documents/GitHub/Spring2018-Project3-Group5/output/best_test_model_advanved.csv', x=best_test_model)
 }
-
 ```
 
 ### Summarize Running Time
@@ -184,6 +183,6 @@ cat("Time for training baseline model=", tm_train_base, "s \n")
 cat("Time for training advanced model=", tm_train, "s \n")
 cat("Time for baseline model to make prediction=", tm_test_base, "s \n")
 cat("Time for advanced model to make prediction=", tm_test, "s \n")
-#accuracy_test <- 1-mean(best_test_model != y_test)
+#accuracy_test <- 1-mean(best_test_model != label_test)
 #cat("Accuracy rate for advanced model=",accuracy_test,"s \n")
 ```
