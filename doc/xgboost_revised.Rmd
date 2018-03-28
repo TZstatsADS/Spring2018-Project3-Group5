@@ -8,7 +8,6 @@ output: html_document
 
 ```{r}
 library(xgboost)
-feature<- read.csv("../data/train/hog.csv")
 labels<-read.csv("../data/train/label_train.csv")
 label<-labels$label-1
 
@@ -154,7 +153,7 @@ system.time(para_sift<-xgboost_para(training_x_SIFT, training_y_SIFT, 5))
 
 ```{r}
 train<-sample(1:3000, 2000)
-fit_hog_xgboost<-xgboost_train(training_x_hog[train,], as.factor(label)[train], para_hog[[2]])
+fit_hog_xgboost<-xgboost_train(training_x_hog[train,], labels$label[train]-1, para_hog[[2]])
 p_hog<-round(predict(fit_hog_xgboost, as.matrix(training_x_hog[-train,])))
 sum(p_hog!=label[-train])/1000
 #p<-xgboost_test(fit_hog_xgboost, training_x_hog)
@@ -165,11 +164,11 @@ fit_lbp<-xgboost_train(training_x_lbp[train,], labels$label[train]-1, para_lbp[[
 p_LBP <- round(predict(fit_lbp, as.matrix(training_x_lbp[-train, ])))
 sum(p_LBP!= label[-train])/1000
 
-fit_rgb_xgboost<-xgboost_train(training_x_RGB[train,], as.factor(label)[train], para_RGB[[2]])
+fit_rgb_xgboost<-xgboost_train(training_x_RGB[train,], labels$label[train]-1, para_RGB[[2]])
 p_RGB<-round(predict(fit_rgb_xgboost, as.matrix(training_x_RGB[-train,])))
 sum(p_RGB!=label[-train])/1000
 
-fit_sift_xgboost<-xgboost_train(training_x_SIFT[train,], as.factor(label)[train], para_sift[[2]])
+fit_sift_xgboost<-xgboost_train(training_x_SIFT[train,], labels$label[train]-1, para_sift[[2]])
 p_sift<-round(predict(fit_sift_xgboost, as.matrix(training_x_SIFT[-train,])))
 sum(p_sift!=label[-train])/1000
 
