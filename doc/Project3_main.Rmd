@@ -164,6 +164,7 @@ if(run.test){
 }
 if(run.test){
   testing_x_rgb<- rgb_feature_test
+  #best_test_model is the result
   tm_test <- system.time(best_test_model <- xgboost_test_result(best_model, rgb_feature_test)+1)[3]
   saveRDS(best_test_model,file='~/Documents/GitHub/Spring2018-Project3-Group5/output/best_test_model.RData')
   }
