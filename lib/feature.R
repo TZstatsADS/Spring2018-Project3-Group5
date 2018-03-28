@@ -6,6 +6,7 @@
 ### Project 3
 ### ADS Spring 2017
 
+
 feature <- function(img_dir, set_name, data_name="data", export=T){
   
   ### Construct process features for training/testing images
@@ -13,7 +14,7 @@ feature <- function(img_dir, set_name, data_name="data", export=T){
   
   ### Input: a directory that contains images ready for processing
   ### Output: an .RData file contains processed features for the images
-
+  
   
   ### RGB - required libraries
   if(!require(EBImage)){
@@ -30,7 +31,7 @@ feature <- function(img_dir, set_name, data_name="data", export=T){
   ima<- list()
   R <- 6; G <- 10; B <- 10
   bin_r<- seq(0, 1, length.out=R); bin_g<- seq(0, 1, length.out=G); bin_b<- seq(0, 1, length.out=B)
-
+  
   
   ft<- matrix(nrow=num_files, ncol = R * G * B)
   
@@ -45,15 +46,15 @@ feature <- function(img_dir, set_name, data_name="data", export=T){
   
   ft <- data.frame(ft)
   
-  label_train<- read.csv("../data/training_set/label_train.csv")
+  label_train<- read.csv("~/Documents/GitHub/Spring2018-Project3-Group5/output/label_train.csv")
   names(label_train)<-c('ind','img','y')
-  ft$y<- label_train[,3]
+  ft$y<- label_train[1:num_files,3]
   
   dat <- ft
   
   ### output constructed features
   if(export){
-    saveRDS(dat, file=paste0("../output/feature_", data_name, "_", set_name, ".RData"))
+    saveRDS(dat, file=paste0("~/Documents/GitHub/Spring2018-Project3-Group5/output/feature_", data_name, "_", set_name, ".RData"))
   }
   return(dat)
 }
