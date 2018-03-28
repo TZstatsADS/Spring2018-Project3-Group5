@@ -105,6 +105,7 @@ if(run.feature.test){
         "test", 
         data_name="rgb", 
         export=TRUE))[3]
+  saveRDS(rgb_feature_test, file="~/Documents/GitHub/Spring2018-Project3-Group5/output/feature_rgb_test.RData")
   
 }
 ```
@@ -161,14 +162,15 @@ if(run.test){
   testing_x_SIFT<- sift_feature_test
   #test model
   tm_test_base <- system.time(base_test_model <- test(base_model,testing_x_SIFT))[3]
-  saveRDS(base_test_model,'~/Documents/GitHub/Spring2018-Project3-Group5/output/labelsbase.Rdata')
+  #saveRDS(base_test_model,'~/Documents/GitHub/Spring2018-Project3-Group5/output/labelsbase.Rdata')
+  write.csv(file='~/Documents/GitHub/Spring2018-Project3-Group5/output/best_test_model_baseline.csv', x=base_test_model)
 }
 if(run.test){
   testing_x_rgb<- rgb_feature_test
   #best_test_model is the result
   tm_test <- system.time(best_test_model <- xgboost_test_result(best_model, rgb_feature_test)+1)[3]
-  saveRDS(best_test_model,file='~/Documents/GitHub/Spring2018-Project3-Group5/output/best_test_model.RData')
-  write.csv(file='~/Documents/GitHub/Spring2018-Project3-Group5/output/best_test_model.csv', x=best_test_model)
+  #saveRDS(best_test_model,file='~/Documents/GitHub/Spring2018-Project3-Group5/output/best_test_model.RData')
+  write.csv(file='~/Documents/GitHub/Spring2018-Project3-Group5/output/best_test_model_advanved.csv', x=best_test_model)
 }
 
 ```
