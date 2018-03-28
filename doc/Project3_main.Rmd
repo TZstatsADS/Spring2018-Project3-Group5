@@ -147,7 +147,8 @@ if(run.train){
   best_para <- xgboost_para(rgb_feature_train,training_y_RGB,K)[[2]]
   tm_train <- system.time(best_model <- xgboost_train(training_x_RGB, training_y_RGB, best_para))[3]
   saveRDS(best_model,file='~/Documents/GitHub/Spring2018-Project3-Group5/output/best_model.RData')
-  best_model <- readRDS('~/Documents/GitHub/Spring2018-Project3-Group5/output/best_model.RData')}
+  best_model <- readRDS('~/Documents/GitHub/Spring2018-Project3-Group5/output/best_model.RData')
+  }
 ```
 
 ### Step 6: Make prediction 
