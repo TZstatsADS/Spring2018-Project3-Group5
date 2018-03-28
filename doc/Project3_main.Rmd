@@ -30,9 +30,9 @@ Set the working directory to the image folder.
 ```{r wkdir, eval=FALSE}
 setwd("~/Documents/GitHub/Spring2018-Project3-Group5")
 ```
-Provide directories for raw images. Training set and test set should be in different subfolders. ????????
+Provide directories for raw images. Training set and test set should be in different subfolders. 
 ```{r}
-experiment_dir <- "../data/" # This will be modified for different data sets.
+experiment_dir <- "~/Documents/GitHub/Spring2018-Project3-Group5/data/" # This will be modified for different data sets.
 img_train_dir <- paste(experiment_dir, "train/images/", sep="")
 img_test_dir <- paste(experiment_dir, "test/images/", sep="")
 ```
@@ -60,7 +60,7 @@ run.train.baseline=F
 ### Step 2: import training images class labels.
 
 ```{r train_label}
-labels<-read.csv("../output/label_train.csv")
+labels<-read.csv("~/Documents/GitHub/Spring2018-Project3-Group5/output/label_train.csv")
 label_train<-labels$label
 ```
 
@@ -68,16 +68,16 @@ label_train<-labels$label
 
 ### Step 3: Construct visual features
 ```{r feature}
-source("../lib/feature.R")
+source("~/Documents/GitHub/Spring2018-Project3-Group5/lib/feature.R")
 
   
 if(run.feature.train){
 
 # get SIFT feature
-  sift_feature_train <- read.csv("../output/SIFT_feature.csv",header = F)
+  sift_feature_train <- read.csv("~/Documents/GitHub/Spring2018-Project3-Group5/output/SIFT_feature.csv",header = F)
   sift_feature_train <- sift_feature_train[,-1]
   sift_feature_train$y <- label_train
-  saveRDS(sift_feature_train, file="../output/feature_SIFT_train.RData")
+  saveRDS(sift_feature_train, file="~/Documents/GitHub/Spring2018-Project3-Group5/output/feature_SIFT_train.RData")
   
 # get RGB feature
   tm_feature <- system.time(rgb_feature_train <- feature(img_train_dir, 
@@ -86,9 +86,9 @@ if(run.feature.train){
         export=TRUE))[3]
 } else {
 #load SIFT feature
-  sift_feature_train<-readRDS("../output/feature_SIFT_train.RData")
+  sift_feature_train<-readRDS("~/Documents/GitHub/Spring2018-Project3-Group5/output/feature_SIFT_train.RData")
 #load RGB feature
-  rgb_feature_train<-readRDS('../output/feature_rgb_train.RData')
+  rgb_feature_train<-readRDS('~/Documents/GitHub/Spring2018-Project3-Group5/output/feature_rgb_train.RData')
 
 }
 
@@ -96,16 +96,16 @@ if(run.feature.train){
 if(run.feature.test){
 
 # get SIFT feature
-  #sift_feature_test <- read.csv("../output/SIFT_feature.csv",header = F)
-  #sift_feature_test <- sift_feature_test[,-1]
-  #saveRDS(sift_feature_test, file="../output/feature_SIFT_test.RData")
+  sift_feature_test <- read.csv("~/Documents/GitHub/Spring2018-Project3-Group5/output/SIFT_test.csv",header = F)
+  sift_feature_test <- sift_feature_test[,-1]
+  saveRDS(sift_feature_test, file="~/Documents/GitHub/Spring2018-Project3-Group5/output/feature_SIFT_test.RData")
 
 # get RGB feature
   tm_feature_test <- system.time(rgb_feature_test <- feature(img_test_dir, 
         "test", 
         data_name="rgb", 
         export=TRUE))[3]
-  saveRDS(rgb_feature_test, file="../output/feature_rgb_test.RData")
+  saveRDS(rgb_feature_test, file="~/Documents/GitHub/Spring2018-Project3-Group5/output/feature_rgb_test.RData")
   
 }
 ```
@@ -114,9 +114,9 @@ if(run.feature.test){
 
 Call the train model and test model from library. 
 ```{r loadlib}
-source("../lib/train_gbm.R")
-source("../lib/test_gbm.R")
-#source("../lib/cross_validation.R")
+source("~/Documents/GitHub/Spring2018-Project3-Group5/lib/train_gbm.R")
+source("~/Documents/GitHub/Spring2018-Project3-Group5/lib/test_gbm.R")
+#source("~/Documents/GitHub/Spring2018-Project3-Group5/lib/cross_validation.R")
 ```
 ```{r}
 if(run.train.baseline){ 
@@ -127,18 +127,18 @@ if(run.train.baseline){
 # train model
   tm_train_base <- system.time(base_model <-  
               train(training_x_SIFT,training_y_SIFT))[3]
-  saveRDS(base_model,file='../output/base_model.RData')
+  saveRDS(base_model,file='~/Documents/GitHub/Spring2018-Project3-Group5/output/base_model.RData')
 }else{
-  base_model <- readRDS('../output/base_model.RData')
+  base_model <- readRDS('~/Documents/GitHub/Spring2018-Project3-Group5/output/base_model.RData')
 }
-base_model <- readRDS('../output/base_model.RData')
+base_model <- readRDS('~/Documents/GitHub/Spring2018-Project3-Group5/output/base_model.RData')
 ```
 
 
 ### Step 5: Train advanced model (XGBoost+RGB) with training images
 ```{r loadslib}
-source("../lib/train_xgboost.r")
-source("../lib/test_xgboost.r")
+source("~/Documents/GitHub/Spring2018-Project3-Group5/lib/train_xgboost.r")
+source("~/Documents/GitHub/Spring2018-Project3-Group5/lib/test_xgboost.r")
 ```
 ```{r}
 if(run.train){
@@ -148,10 +148,10 @@ if(run.train){
 # train model
   best_para <- xgboost_para(rgb_feature_train,training_y_RGB,K)[[2]]
   tm_train <- system.time(best_model <- xgboost_train(training_x_RGB, training_y_RGB, best_para))[3]
-  saveRDS(best_model,file='../output/best_model.RData')
-  best_model <- readRDS('../output/best_model.RData')
+  saveRDS(best_model,file='~/Documents/GitHub/Spring2018-Project3-Group5/output/best_model.RData')
+  best_model <- readRDS('~/Documents/GitHub/Spring2018-Project3-Group5/output/best_model.RData')
 }
-best_model <- readRDS('../output/best_model.RData')
+best_model <- readRDS('~/Documents/GitHub/Spring2018-Project3-Group5/output/best_model.RData')
 ```
 
 ### Step 6: Make prediction 
@@ -164,15 +164,15 @@ if(run.test){
   testing_x_SIFT<- sift_feature_test
   #test model
   tm_test_base <- system.time(base_test_model <- test(base_model,testing_x_SIFT))[3]
-  #saveRDS(base_test_model,'../output/labelsbase.Rdata')
-  write.csv(file='../output/best_test_model_baseline.csv', x=base_test_model)
+  #saveRDS(base_test_model,'~/Documents/GitHub/Spring2018-Project3-Group5/output/labelsbase.Rdata')
+  write.csv(file='~/Documents/GitHub/Spring2018-Project3-Group5/output/best_test_model_baseline.csv', x=base_test_model)
 }
 if(run.test){
   testing_x_rgb<- rgb_feature_test
   #best_test_model is the result
   tm_test <- system.time(best_test_model <- xgboost_test_result(best_model, rgb_feature_test)+1)[3]
-  #saveRDS(best_test_model,file='../output/best_test_model.RData')
-  write.csv(file='../output/best_test_model_advanved.csv', x=best_test_model)
+  #saveRDS(best_test_model,file='~/Documents/GitHub/Spring2018-Project3-Group5/output/best_test_model.RData')
+  write.csv(file='~/Documents/GitHub/Spring2018-Project3-Group5/output/best_test_model_advanved.csv', x=best_test_model)
 }
 ```
 
@@ -181,10 +181,10 @@ Prediction performance matters, so does the running times for constructing featu
 ```{r running_time}
 cat("Time for constructing test features=", tm_feature_test, "s \n")
 #cat("Time for constructing testing features=", tm_feature_test, "s \n")
-cat("Time for training baseline model=", tm_train_base, "s \n")
+#cat("Time for training baseline model=", tm_train_base, "s \n")
 cat("Time for training advanced model=", tm_train, "s \n")
 cat("Time for baseline model to make prediction=", tm_test_base, "s \n")
 cat("Time for advanced model to make prediction=", tm_test, "s \n")
-#accuracy_test <- 1-mean(best_test_model != label_train)
+#accuracy_test <- mean(best_test_model != label_train)
 #cat("Accuracy rate for advanced model=",accuracy_test,"s \n")
 ```
