@@ -135,7 +135,7 @@ if(run.train.baseline){
 
 
 ### Step 5: Train advanced model (XGBoost+RGB) with training images
-```{r loadlib}
+```{r loadslib}
 source("../lib/train_xgboost.r")
 source("../lib/test_xgboost.r")
 ```
